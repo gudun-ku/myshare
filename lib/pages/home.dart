@@ -1,5 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttershare/pages/timeline.dart';
+import 'package:fluttershare/pages/activity_feed.dart';
+import 'package:fluttershare/pages/search.dart';
+import 'package:fluttershare/pages/profile.dart';
+import 'package:fluttershare/pages/upload.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+final googleSignIn = GoogleSignIn();
 
 class Home extends StatefulWidget {
   @override
@@ -8,9 +16,110 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool isAuth = false;
+  PageController pageController;
+  int pageIndex = 0;
 
-  Widget buildAuthScreen() {
-    return Text('Authenticated');
+  @override
+  void initState() {
+    super.initState();
+    pageController = PageController(initialPage: 0);
+    //detects when user signed out
+    googleSignIn.onCurrentUserChanged.listen(
+      (GoogleSignInAccount account) {
+        handleSignIn(account);
+      },
+      onError: (err) {
+        print('Error signing in:  $err');
+      },
+    );
+    //reauthenticate when app is reopened
+    googleSignIn.signInSilently(suppressErrors: false).then((account) {
+      handleSignIn(account);
+    }).catchError((err) {
+      print('Error signing in:  $err');
+    });
+  }
+
+  void handleSignIn(GoogleSignInAccount account) {
+    if (account != null) {
+      print('User signed in!: $account');
+      setState(() {
+        isAuth = true;
+      });
+    } else {
+      setState(() {
+        isAuth = false;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
+
+  void login() {
+    googleSignIn.signIn();
+  }
+
+  void logout() {
+    googleSignIn.signOut();
+  }
+
+  void onPageChanged(int pageIndex) {
+    setState(() {
+      this.pageIndex = pageIndex;
+    });
+  }
+
+  void onTap(int pageIndex) {
+    pageController.jumpToPage(
+      pageIndex,
+    );
+  }
+
+  Scaffold buildAuthScreen() {
+    //return RaisedButton(child: Text('Logout'),onPressed: logout,);
+    return Scaffold(
+      body: PageView(
+        children: <Widget>[
+          Timeline(),
+          ActivityFeed(),
+          Upload(),
+          Search(),
+          Profile(),
+        ],
+        controller: pageController,
+        onPageChanged: onPageChanged,
+        physics: NeverScrollableScrollPhysics(),
+      ),
+      bottomNavigationBar: CupertinoTabBar(
+        currentIndex: pageIndex,
+        onTap: onTap,
+        activeColor: Theme.of(context).primaryColor,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.whatshot),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications_active),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.photo_camera,
+              size: 35.0,
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+          )
+        ],
+      ),
+    );
   }
 
   Widget buildUnAuthScreen() {
@@ -18,9 +127,13 @@ class _HomeState extends State<Home> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [Colors.teal, Colors.purple]),
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Theme.of(context).accentColor.withOpacity(0.5),
+              Theme.of(context).primaryColor,
+            ],
+          ),
         ),
         alignment: Alignment.center,
         child: Column(
@@ -36,7 +149,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             GestureDetector(
-              onTap: () => print('tapped'),
+              onTap: login,
               child: Container(
                 width: 260.0,
                 height: 60.0,
