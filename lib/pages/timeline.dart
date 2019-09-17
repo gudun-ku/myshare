@@ -15,10 +15,10 @@ class _TimelineState extends State<Timeline> {
 
   @override
   void initState() {
-    deleteUser();
-    createUser();
-    updateUser();
-    getUsers();
+    // deleteUser();
+    // createUser();
+    // updateUser();
+    // getUsers();
     super.initState();
   }
 
