@@ -4,7 +4,6 @@ import 'package:fluttershare/widgets/header.dart';
 import 'package:fluttershare/widgets/progress.dart';
 
 final usersRef = Firestore.instance.collection('users');
-//final userRef = Firestore.instance.collection('users').document()
 
 class Timeline extends StatefulWidget {
   @override
@@ -52,24 +51,8 @@ class _TimelineState extends State<Timeline> {
     }
   }
 
-  // getUserById() async {
-  //   final String id = '6MT7Q2E40s0qgAWT0wG3';
-  //   DocumentSnapshot doc = await usersRef.document(id).get();
-  //   print(doc.documentID);
-  //   print(doc.data);
-  //   print(doc.exists);
-  //   // .then((DocumentSnapshot doc) {
-  //   //    print(doc.documentID);
-  //   //    print(doc.data);
-  //   //    print(doc.exists);
-  //   // });
-  // }
-
   getUsers() async {
-    final QuerySnapshot snapshot = await usersRef
-        // .where("postCount", isGreaterThan: 2)
-        // .where("username", isEqualTo: "Jane")
-        // .orderBy("postCount")
+    final QuerySnapshot snapshot = await usersRef     
         .getDocuments();
 
     setState(() {
@@ -96,7 +79,6 @@ class _TimelineState extends State<Timeline> {
             final children = snapshot.data.documents
                 .map<Widget>((data) => _buildListItem(data))
                 .toList();
-
             return Container(
               child: ListView(children: children),
             );
