@@ -6,6 +6,8 @@ import 'package:fluttershare/pages/timeline.dart';
 import 'package:fluttershare/widgets/progress.dart';
 import 'package:meta/meta.dart';
 
+import 'custom_image.dart';
+
 class Post extends StatefulWidget {
   final String postId;
   final String ownerId;
@@ -122,7 +124,9 @@ class _PostState extends State<Post> {
       onDoubleTap: () => print("liking post"),
       child: Stack(
         alignment: Alignment.center,
-        children: <Widget>[Image.network(mediaUrl)],
+        children: <Widget>[
+          cachedNetworkImage(mediaUrl),
+        ],
       ),
     );
   }
