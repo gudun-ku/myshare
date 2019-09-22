@@ -52,8 +52,7 @@ class _TimelineState extends State<Timeline> {
   }
 
   getUsers() async {
-    final QuerySnapshot snapshot = await usersRef     
-        .getDocuments();
+    final QuerySnapshot snapshot = await usersRef.getDocuments();
 
     setState(() {
       users = snapshot.documents;
@@ -93,7 +92,7 @@ class _TimelineState extends State<Timeline> {
 
   Widget _buildListItem(dynamic data) {
     return new ListTile(
-      title: new Text(data['username']),
+      title: new Text(data['username'] ?? "No name"),
       subtitle: new Text("Class"),
     );
   }

@@ -44,8 +44,8 @@ class _EditProfileState extends State<EditProfile> {
     });
     DocumentSnapshot doc = await usersRef.document(widget.currentUserId).get();
     user = User.fromDocument(doc);
-    displayNameController.text = user.diplayName;
-    bioController.text = user.bio;
+    displayNameController.text = user.diplayName ?? "No name";
+    bioController.text = user.bio ?? "No bio";
     setState(() {
       isLoading = false;
     });
@@ -88,7 +88,7 @@ class _EditProfileState extends State<EditProfile> {
           padding: EdgeInsets.only(top: 12.0),
           child: Text(
             "Display Name",
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(color: Colors.grey),            
           ),
         ),
         TextField(
