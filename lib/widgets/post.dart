@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttershare/models/user.dart';
+import 'package:fluttershare/pages/comments.dart';
 import 'package:fluttershare/pages/home.dart';
 import 'package:fluttershare/widgets/progress.dart';
 import 'package:meta/meta.dart';
@@ -215,7 +216,12 @@ class _PostState extends State<Post> {
               padding: EdgeInsets.only(right: 20.0),
             ),
             GestureDetector(
-              onTap: () => print('show comments'),
+              onTap: () => showComments(
+                context,
+                postId: postId,
+                ownerId: ownerId,
+                mediaUrl: mediaUrl,
+              ),
               child: Icon(
                 Icons.chat,
                 size: 28.0,
@@ -273,4 +279,15 @@ class _PostState extends State<Post> {
       ],
     );
   }
+}
+
+showComments(BuildContext context,
+    {String postId, String ownerId, String mediaUrl}) {
+  Navigator.push(context, MaterialPageRoute(builder: (context) {
+    return Comments(
+      postId: postId,
+      postOwnerId: ownerId,
+      postMediaUrl: mediaUrl,
+    );
+  }));
 }
