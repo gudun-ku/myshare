@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttershare/pages/activity_feed.dart';
 import 'package:fluttershare/widgets/progress.dart';
 import 'package:fluttershare/models/user.dart';
 import '../pages/home.dart';
@@ -127,19 +128,21 @@ class UserResult extends StatelessWidget {
       child: Column(
         children: <Widget>[
           GestureDetector(
-            onTap: () => print('user tapped'),
+            onTap: () => showProfile(context, profileId: user.id),
             child: ListTile(
               leading: CircleAvatar(
                 backgroundColor: Colors.grey,
-                backgroundImage: CachedNetworkImageProvider(user.photoUrl),
+                backgroundImage: user.photoUrl == null
+                    ? null
+                    : CachedNetworkImageProvider(user.photoUrl),
               ),
               title: Text(
-                user.diplayName,
+                user.diplayName ?? "No name",
                 style:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
-                user.username,
+                user.username ?? "No name",
                 style: TextStyle(color: Colors.white),
               ),
             ),
