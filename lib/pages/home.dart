@@ -1,6 +1,7 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:fluttershare/pages/create_account.dart';
 import 'package:fluttershare/pages/timeline.dart';
 import 'package:fluttershare/pages/activity_feed.dart';
@@ -17,6 +18,8 @@ final usersRef = Firestore.instance.collection('users');
 final postsRef = Firestore.instance.collection('posts');
 final commentsRef = Firestore.instance.collection('comments');
 final activityFeedRef = Firestore.instance.collection('feed');
+final followersRef = Firestore.instance.collection('followers');
+final followingRef = Firestore.instance.collection('following');
 final DateTime timestamp = DateTime.now();
 User currentUser;
 
