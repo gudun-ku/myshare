@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttershare/models/user.dart';
+import 'package:fluttershare/pages/search.dart';
 import 'package:fluttershare/widgets/header.dart';
 import 'package:fluttershare/widgets/post.dart';
 import 'package:fluttershare/widgets/progress.dart';
@@ -19,13 +20,14 @@ class Timeline extends StatefulWidget {
 }
 
 class _TimelineState extends State<Timeline> {
-  List<dynamic> users = [];
   List<Post> posts;
+  List<String> followingList = [];
 
   @override
   void initState() {
     super.initState();
     getTimeLine();
+    getFollowing();
   }
 
   getTimeLine() async {
@@ -41,16 +43,76 @@ class _TimelineState extends State<Timeline> {
     });
   }
 
+  getFollowing() async {
+    QuerySnapshot snapshot = await followingRef
+        .document(currentUser.id)
+        .collection('userFollowing')
+        .getDocuments();
+    setState(() {
+      followingList = snapshot.documents.map((doc) => doc.documentID).toList();
+    });
+  }
+
   buildTimeLine() {
     if (posts == null) {
       return circularProgress();
     } else if (posts.isEmpty) {
-      return Text("No posts");
+      return buildUsersToFollow();
     } else {
       return ListView(
         children: this.posts,
       );
     }
+  }
+
+  buildUsersToFollow() {
+    //realtime updates - use stream builder
+    return StreamBuilder(
+      stream:
+          usersRef.orderBy('timestamp', descending: true).limit(10).snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return circularProgress();
+        }
+        List<UserResult> userResults = [];
+        snapshot.data.documents.forEach((doc) {
+          User user = User.fromDocument(doc);
+          if (!(currentUser.id == user.id || followingList.contains(user.id))) {
+            userResults.add(UserResult(user));
+          }
+        });
+        //snapshot.data.documents.map((doc) => User.fromDocument(doc) as UserResult).toList();
+        return Container(
+          color: Theme.of(context).accentColor.withOpacity(0.2),
+          child: Column(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.all(12.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.person_add,
+                        color: Theme.of(context).primaryColor, size: 30.0),
+                    SizedBox(
+                      width: 8.0,
+                    ),
+                    Text(
+                      "Users to follow",
+                      style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 30.0),
+                    ),
+                  ],
+                ),
+              ),
+              Column(
+                children: userResults,
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
