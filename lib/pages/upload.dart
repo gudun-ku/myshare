@@ -66,11 +66,11 @@ class _UploadState extends State<Upload>
             children: <Widget>[
               SimpleDialogOption(
                 child: Text("Photo with Camera"),
-                onPressed: handleTakePhoto(),
+                onPressed: () => handleTakePhoto(),
               ),
               SimpleDialogOption(
                 child: Text("Image from gallery"),
-                onPressed: handleChooseFromGallery(),
+                onPressed: () => handleChooseFromGallery(),
               ),
               SimpleDialogOption(
                 child: Text("Cancel"),
