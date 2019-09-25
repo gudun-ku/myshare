@@ -1,92 +1,66 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttershare/models/user.dart';
 import 'package:fluttershare/widgets/header.dart';
+import 'package:fluttershare/widgets/post.dart';
 import 'package:fluttershare/widgets/progress.dart';
+
+import 'home.dart';
 
 final usersRef = Firestore.instance.collection('users');
 
 class Timeline extends StatefulWidget {
+  final User currentUser;
+
+  Timeline({this.currentUser});
+
   @override
   _TimelineState createState() => _TimelineState();
 }
 
 class _TimelineState extends State<Timeline> {
   List<dynamic> users = [];
+  List<Post> posts;
 
   @override
   void initState() {
-    // deleteUser();
-    // createUser();
-    // updateUser();
-    // getUsers();
     super.initState();
+    getTimeLine();
   }
 
-  deleteUser() async {
-    final doc = await usersRef.document("asdafffddd").get();
-    if (doc.exists) {
-      usersRef.document().delete();
-    }
-  }
-
-  createUser() async {
-    final doc = await usersRef.document("asdafffddd").get();
-    if (!doc.exists) {
-      usersRef.document("asdafffddd").setData({
-        "username": "Jeff",
-        "postsCount": 0,
-        "isAdmin": false,
-      });
-    }
-  }
-
-  updateUser() async {
-    final doc = await usersRef.document("asdafffd").get();
-    if (doc.exists) {
-      doc.reference.updateData({
-        "username": "Jonh",
-        "postsCount": 33,
-        "isAdmin": false,
-      });
-    }
-  }
-
-  getUsers() async {
-    final QuerySnapshot snapshot = await usersRef.getDocuments();
-
+  getTimeLine() async {
+    QuerySnapshot snapshot = await timeLineRef
+        .document(widget.currentUser.id)
+        .collection('timeLinePosts')
+        .orderBy('timestamp', descending: true)
+        .getDocuments();
+    List<Post> posts =
+        snapshot.documents.map((doc) => Post.fromDocument(doc)).toList();
     setState(() {
-      users = snapshot.documents;
+      this.posts = posts;
     });
-    snapshot.documents.forEach((DocumentSnapshot doc) {
-      // print(doc.documentID);
-      // print(doc.data);
-      // print(doc.exists);
-    });
+  }
+
+  buildTimeLine() {
+    if (posts == null) {
+      return circularProgress();
+    } else if (posts.isEmpty) {
+      return Text("No posts");
+    } else {
+      return ListView(
+        children: this.posts,
+      );
+    }
   }
 
   @override
   Widget build(context) {
     return Scaffold(
       appBar: header(context, isAppTitle: true),
-      body: StreamBuilder(
-          stream: usersRef.snapshots(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return circularProgress();
-            }
-
-            final children = snapshot.data.documents
-                .map<Widget>((data) => _buildListItem(data))
-                .toList();
-            return Container(
-              child: ListView(children: children),
-            );
-          }),
-      // body: Container(
-      //   child: ListView(
-      //     children: users.map((user) => Text(user['username'])).toList(),
-      //   ),
-      // ),
+      body: RefreshIndicator(
+        onRefresh: () => getTimeLine(),
+        child: buildTimeLine(),
+      ),
     );
   }
 
