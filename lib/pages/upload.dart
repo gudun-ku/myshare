@@ -3,8 +3,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttershare/models/user.dart';
-import 'package:fluttershare/widgets/progress.dart';
+import 'package:myshare/models/user.dart';
+import 'package:myshare/widgets/progress.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -298,7 +298,7 @@ class _UploadState extends State<Upload>
         """${placemark.subThoroughfare} ${placemark.thoroughfare},  
         ${placemark.subLocality} ${placemark.locality} ,${placemark.subAdministrativeArea} 
         ${placemark.administrativeArea} ${placemark.postalCode} ${placemark.country} """;
-    print(completeAddress);
+    //print(completeAddress);
 
     String formattedAddress = "${placemark.locality}, ${placemark.country}";
     locationController.text = formattedAddress;

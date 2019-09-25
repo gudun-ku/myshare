@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
-import 'package:fluttershare/models/user.dart';
-import 'package:fluttershare/widgets/progress.dart';
+import 'package:myshare/models/user.dart';
+import 'package:myshare/widgets/progress.dart';
 
 import 'home.dart';
 
@@ -88,7 +88,7 @@ class _EditProfileState extends State<EditProfile> {
           padding: EdgeInsets.only(top: 12.0),
           child: Text(
             "Display Name",
-            style: TextStyle(color: Colors.grey),            
+            style: TextStyle(color: Colors.grey),
           ),
         ),
         TextField(

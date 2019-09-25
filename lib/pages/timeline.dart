@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttershare/models/user.dart';
-import 'package:fluttershare/pages/search.dart';
-import 'package:fluttershare/widgets/header.dart';
-import 'package:fluttershare/widgets/post.dart';
-import 'package:fluttershare/widgets/progress.dart';
+import 'package:myshare/models/user.dart';
+import 'package:myshare/pages/search.dart';
+import 'package:myshare/widgets/header.dart';
+import 'package:myshare/widgets/post.dart';
+import 'package:myshare/widgets/progress.dart';
 
 import 'home.dart';
 

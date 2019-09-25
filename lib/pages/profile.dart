@@ -2,13 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fluttershare/models/user.dart';
-import 'package:fluttershare/pages/edit_profile.dart';
-import 'package:fluttershare/pages/home.dart';
-import 'package:fluttershare/widgets/header.dart';
-import 'package:fluttershare/widgets/post.dart';
-import 'package:fluttershare/widgets/post_tile.dart';
-import 'package:fluttershare/widgets/progress.dart';
+import 'package:myshare/models/user.dart';
+import 'package:myshare/pages/edit_profile.dart';
+import 'package:myshare/pages/home.dart';
+import 'package:myshare/widgets/header.dart';
+import 'package:myshare/widgets/post.dart';
+import 'package:myshare/widgets/post_tile.dart';
+import 'package:myshare/widgets/progress.dart';
 
 class Profile extends StatefulWidget {
   final String profileId;

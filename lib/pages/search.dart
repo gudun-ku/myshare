@@ -2,9 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluttershare/pages/activity_feed.dart';
-import 'package:fluttershare/widgets/progress.dart';
-import 'package:fluttershare/models/user.dart';
+import 'package:myshare/pages/activity_feed.dart';
+import 'package:myshare/widgets/progress.dart';
+import 'package:myshare/models/user.dart';
 import '../pages/home.dart';
 
 class Search extends StatefulWidget {
@@ -111,7 +111,7 @@ class _SearchState extends State<Search>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    
+
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor.withOpacity(0.8),
       appBar: buildSearchField(),

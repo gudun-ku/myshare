@@ -4,11 +4,11 @@ import 'package:animator/animator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttershare/models/user.dart';
-import 'package:fluttershare/pages/activity_feed.dart';
-import 'package:fluttershare/pages/comments.dart';
-import 'package:fluttershare/pages/home.dart';
-import 'package:fluttershare/widgets/progress.dart';
+import 'package:myshare/models/user.dart';
+import 'package:myshare/pages/activity_feed.dart';
+import 'package:myshare/pages/comments.dart';
+import 'package:myshare/pages/home.dart';
+import 'package:myshare/widgets/progress.dart';
 import 'package:meta/meta.dart';
 
 import 'custom_image.dart';
@@ -185,9 +185,9 @@ class _PostState extends State<Post> {
     // then delete all comments
     QuerySnapshot commentsSnapshot = await commentsRef
         .document(postId)
-        .collection("comments")     
+        .collection("comments")
         .getDocuments();
-      commentsSnapshot.documents.forEach((doc) {
+    commentsSnapshot.documents.forEach((doc) {
       if (doc.exists) {
         doc.reference.delete();
       }
@@ -289,13 +289,6 @@ class _PostState extends State<Post> {
                       )),
                 )
               : SizedBox(),
-          // showHeart
-          //     ? Icon(
-          //         Icons.favorite,
-          //         size: 80.0,
-          //         color: Colors.red,
-          //       )
-          //     : SizedBox(),
         ],
       ),
     );

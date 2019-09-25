@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fluttershare/pages/home.dart';
-import 'package:fluttershare/widgets/header.dart';
-import 'package:fluttershare/widgets/post.dart';
-import 'package:fluttershare/widgets/progress.dart';
+import 'package:myshare/pages/home.dart';
+import 'package:myshare/widgets/header.dart';
+import 'package:myshare/widgets/post.dart';
+import 'package:myshare/widgets/progress.dart';
 
 class PostScreen extends StatelessWidget {
   final String userId;
@@ -22,16 +22,25 @@ class PostScreen extends StatelessWidget {
           .document(postId)
           .get(),
       builder: (context, snapshot) {
-        if(!snapshot.hasData) {
+        if (!snapshot.hasData) {
           return circularProgress();
         }
         Post post = Post.fromDocument(snapshot.data);
-        return Center(child: Scaffold(
-          appBar: header(context, titleText: post?.description,),
-          body: ListView(children: <Widget>[
-            Container(child: post,)
-          ],),
-        ),);
+        return Center(
+          child: Scaffold(
+            appBar: header(
+              context,
+              titleText: post?.description,
+            ),
+            body: ListView(
+              children: <Widget>[
+                Container(
+                  child: post,
+                )
+              ],
+            ),
+          ),
+        );
       },
     );
   }
