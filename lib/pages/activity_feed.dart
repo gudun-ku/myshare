@@ -126,7 +126,7 @@ class ActivityFeedItem extends StatelessWidget {
 
     if (type == "like") {
       activiyItemText = "liked your post";
-    } else if (type == "folow") {
+    } else if (type == "follow") {
       activiyItemText = "is following you";
     } else if (type == "comment") {
       activiyItemText = 'replied: ${commentData}';
