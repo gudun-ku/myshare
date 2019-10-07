@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "330048955381-a6liqm0lh39057atjd9ennt959kjchv1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.beloushkin.myshare",
+            "certificate_hash": "0b675eec1f995396fd7b3b9d58bf3f19ad29bd2d"
+          }
+        },
+        {
           "client_id": "330048955381-vantoro8m2d88foi2bokl8qiv3ev36rp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

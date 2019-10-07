@@ -76,7 +76,7 @@ exports.onCreatePost = functions.firestore
     const postId = context.params.postId;
 
     // 1) get all the followers of the user who made the post
-    const userFollowersRef = admin.firestore
+    const userFollowersRef = admin.firestore()
       .collection("followers")
       .doc(userId)
       .collection("userFollowers");
@@ -105,7 +105,7 @@ exports.onUpdatePost = functions.firestore
     const postId = context.params.postId;
 
     // 1) get all the followers of the user who made the post
-    const userFollowersRef = admin.firestore
+    const userFollowersRef = admin.firestore()
       .collection("followers")
       .doc(userId)
       .collection("userFollowers");
@@ -138,7 +138,7 @@ exports.onDeletePost = functions.firestore
     const postId = context.params.postId;
 
     // 1) get all the followers of the user who made the post
-    const userFollowersRef = admin.firestore
+    const userFollowersRef = admin.firestore()
       .collection("followers")
       .doc(userId)
       .collection("userFollowers");
