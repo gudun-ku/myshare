@@ -84,12 +84,12 @@ exports.onCreatePost = functions.firestore
     const querySnapshot = await userFollowersRef.get();
     // add new post to each followers timeline
     querySnapshot.forEach(doc => {
-      const followerId = doc.id;
+      const followerId = doc.id;      
       admin
         .firestore()
         .collection("timeline")
         .doc(followerId)
-        .collection("timelinePosts")
+        .collection("timeLinePosts")
         .doc(postId)
         .set(postCreated);
     });
@@ -99,7 +99,7 @@ exports.onCreatePost = functions.firestore
 exports.onUpdatePost = functions.firestore
   .document("/posts/{userId}/userPosts/{postId}")
   .onUpdate(async (change, context) => {
-    console.log("Post updated", snapshot.id);
+    console.log("Post updated", change.id);
     const postUpdated = change.after.data();
     const userId = context.params.userId;
     const postId = context.params.postId;
@@ -118,7 +118,7 @@ exports.onUpdatePost = functions.firestore
         .firestore()
         .collection("timeline")
         .doc(followerId)
-        .collection("timelinePosts")
+        .collection("timeLinePosts")
         .doc(postId)
         .get()
         .then(doc => {
@@ -151,7 +151,7 @@ exports.onDeletePost = functions.firestore
         .firestore()
         .collection("timeline")
         .doc(followerId)
-        .collection("timelinePosts")
+        .collection("timeLinePosts")
         .doc(postId)
         .get()
         .then(doc => {
